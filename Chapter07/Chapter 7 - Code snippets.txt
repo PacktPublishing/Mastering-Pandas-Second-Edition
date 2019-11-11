@@ -1,0 +1,527 @@
+### Importing required libraries
+
+import datetime
+import pandas as pd
+from random import randint
+
+### Creating date sequence of 300 (periods=300) consecutive days (freq='D') starting from 2016-01-15
+
+D1=pd.date_range('2016-01-15',periods=300,freq='D')
+
+### Creating a date sequence with of 300 days with day (b/w 1-30), month (b/w 1-12) and year (b/w 2010-2025) chosen at random
+
+date_str=[]
+for i in range(300):
+    date_str1=str(randint(2010,2025))+'-'+str(randint(1,30))+'-'+str(randint(3,12))
+    date_str.append(date_str1)
+D2=date_str
+
+### Creating a data frame with two date sequences and call them as Start Date and End Date
+
+Date_frame=pd.DataFrame({'Start Date':D1,'End Date':D2})
+Date_frame['End Date'] =  pd.to_datetime(Date_frame['End Date'], format='%Y-%d-%m')
+
+# Creating lambda functions
+f1=lambda x:x-datetime.datetime.today()
+f2=lambda x,y:x-y
+f3=lambda x:pd.to_datetime('2017-28-01', format='%Y-%d-%m')>x
+
+# Applying lambda functions
+Date_frame['diff1']=Date_frame['End Date'].apply(f1)
+Date_frame['diff2']=f2(Date_frame['Start Date'],Date_frame['End Date'])
+Date_frame['Before 28-07-17']=Date_frame['End Date'].apply(f3)
+Date_frame['diff3']=Date_frame['End Date'].map(f1)
+
+# Inf test
+import math
+test = math.inf
+test>pow(10,10) #Comparing whether Inf is larger than 10 to the power 10
+
+# Dropping NAs
+data.dropna(axis=0,how='all')            # axis=0 means along rows
+data.dropna(axis=0,how='any')
+data.fillna(0)       
+data.fillna(‘text’)     
+data[‘body’].fillna(0)          
+data['age'].fillna(data['age'].mean())        
+data['age'].fillna(method='ffill')
+data['age'].fillna(method='backfill')
+
+# Interpolation
+import numpy as np
+import pandas as pd
+A=[1,3,np.nan,np.nan,11,np.nan,91,np.nan,52]
+pd.Series(A).interpolate()
+pd.Series(A).interpolate(method='spline',order=2)             
+pd.Series(A).interpolate(method='polynomial',order=2)             
+
+# Comparing different interpolation methods
+#Needed for generating plot inside Jupyter notebook
+%matplotlib inline
+#Setting seed for regenerating the same random number
+np.random.seed(10)
+#Generate Data
+A=pd.Series(np.arange(1,100,0.5)**3+np.random.normal(5,7,len(np.arange(1,100,0.5))))
+#Sample random places to introduce missing values
+np.random.seed(5)
+NA=set([np.random.randint(1,100) for i in range(25)])
+#Introduce missing values
+A[NA]=np.nan
+#Define the list of interpolation methods
+methods=['linear','quadratic','cubic']
+#Apply the interpolation methods and create a dataframe
+df = pd.DataFrame({m: A.interpolate(method=m) for m in methods})
+#Find the mean of each column (each interpolation method)
+df.apply(np.mean,axis=0)
+
+np.random.seed(5)
+NA1=[np.random.randint(1,100) for i in range(25)]
+df.iloc[NA1,:]
+
+# kNN for imputation
+A=np.random.randint(2,size=100)
+B=np.random.normal(7,3,100)
+C=np.random.normal(11,4,100)
+X=(np.vstack((A,B,C))).T
+
+#Creating testing data by replacing column A (outcome variable) with NaNs
+X_with_nan = np.copy(X)
+X_with_nan[:,0]=np.nan
+
+# Load libraries
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+
+# Train KNN learner
+clf = KNeighborsClassifier(3, weights='uniform')
+trained_model = clf.fit(X[:,1:], X[:,0])
+
+#Predicting/Imputing on test dataset
+imputed_values = trained_model.predict(X_with_nan[:,1:])
+imputed_values
+
+
+
+# Creating sample dataframe 
+sample_df = pd.DataFrame([["Pulp Fiction", 62, 46], ["Forrest Gump", 38, 46], ["Matrix", 26, 39], ["It's a Wonderful Life", 6, 0], ["Casablanca", 5, 6]], columns = ["Movie", "Wins", "Nominations"])
+sample_df
+
+# Items method
+for item in sample_df["Wins"].items():
+    print(item)
+    
+# Iteritems method
+for item in sample_df["Wins"].iteritems():
+    print(item)
+    
+# Items method on dataframe
+for col in sample_df.items():
+    print(col)
+
+
+# Keys method on series
+sample_df["Wins"].keys()
+
+
+# Keys method on dataframe
+sample_df.keys()
+
+
+# Pop method on series
+sample_df["Wins"].pop(2)
+
+
+# Output after applying pop on series
+sample_df["Wins"]
+
+
+# Applying pop on dataframe to remove column
+sample_df.pop("Nominations")
+
+
+# After applying pop to remove column
+sample_df
+
+
+# Apply method
+sample_df["Wins"].apply(np.exp)
+
+
+# Apply method for user defined function
+def div_by_100(x):
+    return x/100
+
+sample_df["Nominations"].apply(div_by_100)
+
+
+# Map method
+sample_df["Wins"].map({62 : 60, 38 : 20})
+
+
+# Drop method for series
+sample_df["Wins"].drop([0, 2])
+
+
+# Drop method for dataframe
+sample_df.drop(labels=["Wins", "Nominations"], axis = 1)
+
+
+# Multi-indexed dataframe creation
+multidf = sample_df.set_index("Movie").unstack()
+multidf
+
+
+# Drop method for hierarchical indexed dataframe
+multidf.drop(["Matrix"], level = 1 )
+
+
+# Equals function
+compare_series = pd.Series([62, 38, 26, 6, 5])
+sample_df["Wins"].equals(compare_series)
+
+
+# Sampling a series
+sample_df["Movie"].sample(3)
+
+
+# Columnwise sampling
+sample_df.sample(frac = 0.5, axis = 1)
+
+
+# Pandas ravel
+sample_df["Wins"].ravel()
+
+
+# Frequency table in Pandas
+pd.Series(["Pandas", "Pandas", "Numpy", "Pandas", "Numpy"]).value_counts()
+
+
+# Frequency for numeric column
+sample_df["Nominations"].value_counts()
+
+
+# Fequency with binning for numeric column
+sample_df["Nominations"].value_counts(bins = 2)
+
+
+# Linear interpolation
+lin_series = pd.Series([17,19,np.NaN,23,25,np.NaN,29])
+lin_series.interpolate()
+
+
+# Backfilled interpolation with padding
+lin_series.interpolate(method = "pad", limit_direction = "backward")
+
+
+# Conversion to uppercase
+sample_df["Movie"].str.upper()
+
+
+# Conversion to lowercase
+sample_df["Movie"].str.lower()
+
+
+# Capitalize function on series
+pd.Series(["elon musk", "tim cook", "larry page", "jeff bezos"]).str.capitalize()
+
+
+# Title case conversion
+pd.Series(["elon musk", "tim cook", "larry page", "jeff bezos"]).str.title()
+
+
+# Swapcase function
+sample_df["Movie"].str.swapcase()
+
+
+# Contains function
+sample_df["Movie"].str.contains("atr")
+
+
+# Conatins function accepting regex
+sample_df["Movie"].str.contains("atr|der", regex = True)
+
+
+# Handling case sensitivity in string match
+sample_df["Movie"].str.contains("cas", case = True)
+
+
+# Regex flags for contains function
+import re
+sample_df["Movie"].str.contains("MATrix", flags = re.IGNORECASE, regex=True)
+
+# Find function
+sample_df["Movie"].str.find("on")
+
+
+find_series = pd.Series(["abracadabra", "mad man"])
+
+
+find_series.str.find("ra")
+
+
+# Find function with start limit
+find_series.str.find("a", start = 2)
+
+
+# Replace function
+sample_df["Movie"].str.replace("i","'rep'")
+
+
+# Replace function with number of replacements specified
+sample_df["Movie"].str.replace("i","'rep'", n = 1)
+
+
+# Strip function
+strip_series = pd.Series(["\tChina", "U.S.A  ", "U\nK"])
+strip_series
+
+
+strip_series.str.strip()
+
+
+sample_df["Movie"].str.strip("opnf")
+
+
+# Split function
+split_series = pd.Series(["Black, White", "Red, Blue, Green", "Cyan, Magenta, Yellow"])
+split_series
+
+split_series.str.split(", ")
+
+split_series.str.split(", ", expand = True)
+split_series.str.split(", ", n = 0)
+
+
+# Startswith function
+start_series = pd.Series(["strange", "stock", "cost", "past", "state"])
+start_series.str.startswith("st")
+
+
+# Endswith function
+end_series= pd.Series(["ramen", "program", "cram", "rammed", "grammer"])
+end_series.str.endswith("ram")
+
+
+# isalpha function
+pd.Series(["ui26", "ui", "26"]).str.isalpha()
+
+
+# isalnum function
+pd.Series(["ui26", "ui", "26"]).str.isalnum()
+
+
+# isnumeric function
+pd.Series(["ui26", "ui", "26"]).str.isnumeric()
+
+
+# isdigit function
+pd.Series(["ui26", "ui", 26]).str.isdigit()
+
+
+# Binary operation - add
+df_1 = pd.DataFrame([[1,2,3],[4,5,6]], columns=["a","b","c"])
+df_2 = pd.DataFrame([[6,7,8]],columns=["c","1","b"])
+df_1.add(df_2)
+
+
+# Binary operation - mul
+df_1.mul(df_2, fill_value = 0)
+
+# Binary operation - sub
+df_1.sub(2)
+
+
+# Binary operation - pow
+pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd']).pow(pd.Series([4, 3, 2, 1], index=['a', 'b', 'd', 'e']))
+
+
+# Binary operation - mod
+pd.DataFrame([[27, 33, 44]], columns=["a", "b", "c"]).mod(pd.DataFrame([[7, 6, 2]], columns=["b", "a", "d"]))
+
+
+# Binary operation - div
+df = pd.DataFrame([[1, 4, 6], [np.NaN, 5, 3], [2, 7, np.NaN], [5, 9, 4], [1, np.NaN, 11]], columns = ["ColA", "ColB", "ColC"], index = ["a", "b", "c", "d", "e"])
+df
+
+
+df_multi = df.iloc[0:4, :]
+df_multi.index = pd.MultiIndex.from_tuples([(1, 'a'), (1, 'b'), (1, 'c'), (2, 'a')])
+df_multi
+
+
+df.div(df_multi, level = 1)
+
+
+# Lesser than function
+df.lt(df_multi, level = 1)
+
+# Lesser than or equal to function
+df.le(df_multi, level = 1)
+
+
+# Round function
+pd.Series([6.78923, 8.02344, 0.1982]).round()
+
+
+pd.Series([6.78923, 8.02344, 0.1982]).round(2)
+
+
+# Combine function
+pd.Series([9, 10, 11]).combine(pd.Series([7, 15, 12]), max)
+
+
+# Align function
+s1 = pd.Series([5,6,7,8,9], index = ["a","b","c","d","e"])
+s2 = pd.Series([1,2,3,4,5], index = ["d","b","g","f","a"])
+s1.align(s2, join="outer")
+
+
+s1.align(s2, join="inner")
+
+# Sample dataframe
+sales_df = pd.read_csv("D:/New Chapters/salesdata.csv", encoding = "ISO-8859-1").iloc[0:5,11:14]
+sales_df
+
+# abs() function
+abs_df = pd.DataFrame({"Integers": [-1, -2, -3, 0, 2], "Complex": [5+2j, 1+1j, 3+3j, 2+3j, 4+2j]})
+abs_df.abs()
+
+# corr function
+sales_df.corr()
+
+# cov() function
+sales_df.cov()
+
+# cummax() function
+sales_df.cummax()
+
+# Dataframe with NAs
+sales_df_na
+
+# cumsum() function
+sales_df_na.cumsum()
+
+# cumsum() with skipna set to False
+sales_df_na.cumsum(skipna=False)
+
+# cumprod() along column axis
+sales_df.cumprod(axis = 1)
+
+# describe() function
+sales_df.describe()
+
+# describe() function for objects
+sales_df_full.describe(include = np.object)
+
+# describe() with more percentiles
+sales_df.describe(percentiles = [0.1, 0.2, 0.3, 0.4, 0.5])
+
+# diff() function
+sales_df.diff()
+
+# diff() along column axis
+sales_df.diff(axis = 1)
+
+# diff() at varied intervals
+sales_df.diff(periods = 2)
+
+# rank() function
+sales_df.rank()
+
+# rank() for descending order
+sales_df.rank(ascending = False)
+
+# rank() returning percentage
+sales_df.rank(pct = True)
+
+# rank() tiebreaker methods
+sales_df.rank(method = "min")
+
+# Getting quantiles of dataframe
+sales_df.quantile(q = [0.1, 0.9])
+
+# Quantiles of timeseries
+time_col = pd.DataFrame({"time": pd.date_range("2017-01-01", "2017-12-31")})
+time_col.quantile(q = [0.1, 0.5], numeric_only = False)
+
+# round() function
+sales_df.round()
+
+# round() function
+sales_df.round(decimals = 10)
+
+# pct_change() function
+sales_df.pct_change()
+
+# min() function
+sales_df.min()
+
+# max() function
+sales_df.max(axis = 1)
+
+# Dataframe with NAs
+sales_df_na
+
+# median() function
+sales_df_na.median()
+
+# Creating multiindexed dataframe
+multileveldf = sales_df_full[["Category", "ShipMode", "Sales", "Quantity"]].groupby(["Category", "ShipMode"]).sum()
+multileveldf
+
+# mean() for multilevel dataframe
+multileveldf.mean()
+
+# mean() for a specific level
+multileveldf.mean(level = 0)
+
+# Creating sampe dataframe
+all_any = pd.DataFrame({"A": [True, False, False, True, True], "B": [1, 1, 1, 1, 1], "C": [10, 11, 20, 22, 33], "D": ["abc", "xyz", "pqr", "ijk", "def"], "E": [False, False, False, False, False]})
+all_any
+
+# all() function
+all_any.all()
+
+# any() function
+all_any.any()
+
+# all() for only Boolean
+all_any.all(bool_only = True)
+
+# clip() function
+sales_df.clip(8, 3000)
+
+# Dataframe with NAs
+sales_df_na
+
+# count() function
+sales_df_na.count()
+
+# cut() function
+bin_data = np.array([1, 5, 2, 12, 3, 25, 9, 10, 11, 4])
+pd.cut(bin_data, bins = 3)
+pd.cut(bin_data, bins = [0.5, 7, 10, 20, 30])
+
+interval = pd.interval_range(start = 0, end = 30, periods = 5)
+interval
+
+pd.cut(bin_data, bins = interval)
+
+pd.cut(bin_data, bins = [0.5, 7, 10, 20, 30], right = False)
+
+pd.cut(bin_data, bins = [0.5, 7, 10, 20, 30], include_lowest= True)
+
+pd.cut(bin_data, bins = 5, retbins = True)
+
+pd.cut(bin_data, bins = 3, labels = ["level1", "level2", "level3"])
+
+
+pd.cut(bin_data, bins = [0.5, 7, 10, 30, 30], duplicates = "drop")
+
+
+pd.cut(bin_data, bins = 3, precision = 1)
+
+
+# qcut() function
+pd.qcut(bin_data, q = 5)
+

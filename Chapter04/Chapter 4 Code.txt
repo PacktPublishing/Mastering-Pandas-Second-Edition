@@ -1,0 +1,353 @@
+
+#Reading a CSV file
+
+import pandas as pd
+import os
+os.chdir(' ')
+data=pd.read_csv('Hospital Cost.csv')
+
+#Specifying column names for a dataset
+
+column_names=pd.read_csv('Customer Churn Columns.csv')
+column_names_list=column_names['Column Names'].tolist()
+data=pd.read_csv('Customer Churn Model.txt',header=None,names=column_names_list)
+
+#Reading from a String of data
+
+from io import StringIO
+data = 'col1,col2,col3\na,b,1\na,b,2\nc,d,3\nc,e,4\ng,f,5\ne,z,6'
+pd.read_csv(StringIO(data))
+
+#Skipping certain rows
+
+from io import StringIO
+data = 'col1,col2,col3\na,b,1\na,b,2\nc,d,3\nc,e,4\ng,f,5\ne,z,6'
+pd.read_csv(StringIO(data),skiprows=lambda x: x % 3 != 0)
+
+# Row Index
+
+data = 'a,b,c\n4,apple,bat,5.7\n8,orange,cow,10'
+pd.read_csv(StringIO(data), index_col=0)
+
+# Reading a text file
+
+data=pd.read_csv('Tab Customer Churn Model.txt',sep='/t')
+
+#Subsetting while reading
+
+data=pd.read_csv('Tab Customer Churn Model.txt',sep='/t',usecols=[1,3,5])
+data=pd.read_csv('Tab Customer Churn Model.txt',sep='/t',usecols=['VMail Plan','Area Code'])
+
+# Reading thousands formatted number column
+
+pd.read_csv('tmp.txt',sep='|',thousands=',')
+
+
+#Indexing and multi-indexing
+
+pd.read_csv('mindex.txt')
+pd.read_csv('mindex.txt',index_col=[0,1])
+data.loc[1977]
+data.loc[(1977,'A')]
+
+#Reading large file in chunks
+
+for chunks in pd.read_csv('Chunk.txt',chunksize=500):
+    print(chunks.shape)
+data=pd.read_csv('Chunk.txt',chunksize=500)
+data=pd.concat(data,ignore_index=True)
+print(data.shape)
+
+# Writing to a CSV
+
+
+import numpy as np
+import pandas as pd
+a=['Male','Female']
+b=['Rich','Poor','Middle Class']
+gender=[]
+seb=[]
+for i in range(1,101):
+    gender.append(np.random.choice(a))
+    seb.append(np.random.choice(b))
+height=30*np.random.randn(100)+155
+weight=20*np.random.randn(100)+60
+age=10*np.random.randn(100)+35
+income=1500*np.random.randn(100)+15000
+df=pd.DataFrame({'Gender':gender,'Height':height,'Weight':weight,'Age':age,'Income':income,'Socio-Eco':seb})
+
+df.to_csv('data.csv')
+df.to_csv('data.txt')
+
+df.to_csv('data.csv',sep='|')
+df.to_csv('data.txt',sep='/')
+
+# Reading from URL
+
+pd.read_csv('http://bit.ly/2cLzoxH').head()
+
+import csv
+import urllib2
+
+url='http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data’
+response=urllib2.urlopen(url)
+cr=csv.reader(response)
+
+for rows in cr:
+	print rows
+
+# Reading from AWS S3
+
+import os
+import pandas as pd
+from s3fs.core import S3FileSystem
+
+os.environ['AWS_CONFIG_FILE'] = 'aws_config.ini'
+
+s3 = S3FileSystem(anon=False)
+key = 'path\to\your-csv.csv'
+bucket = 'your-bucket-name'
+
+df = pd.read_csv(s3.open('{}/{}'.format(bucket, key),
+                         mode='rb')
+                 )
+
+# Writing to AWS S3
+
+
+import s3fs
+
+bytes_to_write = df.to_csv(None).encode()
+fs = s3fs.S3FileSystem(key=key, secret=secret)
+with fs.open('s3://bucket/path/to/file.csv', 'wb') as f:
+    f.write(bytes_to_write)
+
+# Reading HTML tables
+
+pd.read_html('http://www.fdic.gov/bank/individual/failed/banklist.html')
+
+match = 'Malta National Bank'
+df_list = pd.read_html('http://www.fdic.gov/bank/individual/failed/banklist.html', match=match)
+
+print(data.to_html(columns=['country','year']))
+
+# Writing to HTML tables
+
+data=pd.read_csv('http://bit.ly/2cLzoxH')
+print(data.to_html('test.html'))
+
+
+data.to_html('test.html',bold_rows=False)
+
+# Creating JSON
+
+import numpy as np
+pd.DataFrame(np.random.randn(5, 2), columns=list('AB')).to_json()
+
+dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),columns=list('ABC'), index=list('xyz'))
+dfjo.to_json(orient="columns")
+
+dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),columns=list('ABC'), index=list('xyz'))
+dfjo.to_json(orient="index")
+
+dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),columns=list('ABC'), index=list('xyz'))
+dfjo.to_json(orient="records")
+
+dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),columns=list('ABC'), index=list('xyz'))
+dfjo.to_json(orient="values")
+
+dfjo = pd.DataFrame(dict(A=range(1, 4), B=range(4, 7), C=range(7, 10)),columns=list('ABC'), index=list('xyz'))
+dfjo.to_json(orient="split")
+
+# Writing to JSON
+
+import json
+with open('jsonex.txt','w') as outfile:
+    json.dump(dfjo.to_json(orient="columns"), outfile)
+
+# Reading JSON
+
+f=open('usagov_bitly.txt','r').readline()
+json.loads(f)
+
+records=[]
+f=open('usagov_bitly.txt','r')
+for i in range(1000):
+    fiterline=f.readline()
+    d=json.loads(fiterline)
+    records.append(d)
+f.close()
+
+
+latlong=[rec['ll'] for rec in records if 'll' in rec]
+
+# JSON to Dataframe
+
+df=pd.DataFrame(records)
+df.head()
+df['tz'].value_counts()
+
+# Subsetting a JSON
+
+
+with open('product.json') as json_string:
+    d=json.load(json_string)
+
+d['hits']['hits'][0]['_score']
+d['hits']['hits'][0]['_source']['r']['wayfair']['image_url']
+
+# Read HDF format
+pd.read_hdf('stat_df.h5','table')
+
+# Reading HDF along with indexing
+pd.read_hdf('stat_df.h5', 'table', where=['index>=2'])
+
+# Reading feather file
+pd.read_feather(“sample.feather”)
+
+# Reading Parquet file with Pyarrow
+pd.read_parquet("sample.paraquet",engine='pyarrow')
+
+# Column subsetting when reading a Parquet
+pd.read_parquet("sample.paraquet",engine='pyarrow',columns=["First_Name","Score"])
+
+# Reading Parquet with Fastparquet
+pd.read_parquet("sample.paraquet",engine='fastparquet')
+
+# Defining a SQL engine
+engine = create_engine('sqlite:///:memory:')
+
+# Reading SQL table from engine
+with engine.connect() as conn, conn.begin():
+   		 print(pd.read_sql_table('data_sql', conn))
+
+# Defining index when reading a SQL table
+pd.read_sql_table('data_sql', engine, index_col='index')
+
+# Prasing dates when reading a SQL table
+pd.read_sql_table('data_sql', engine, parse_dates={'Entry_date': '%Y-%m-%d'})
+pd.read_sql_table('data_sql’, engine, parse_dates={'Entry_date’: {'format': '%Y-%m-%d %H:%M:%S'}})
+
+# Reading SQL table based on query
+pd.read_sql_query("SELECT Last_name, Score FROM data_sql", engine)
+
+# Exceute function in Pandas for SQL
+from pandas.io import sql
+	sql.execute(“INSERT INTO tablename VALUES (90, 100, 171)”, engine)
+
+# Reading from SQLITE
+import sqlite3
+conn = sqlite3.connect(':memory:')
+
+# Reading SAS datafile
+df = pd.read_sas('sample.sas7bdat')
+
+# Reading SAS file in batches
+rdr = pd.read_sas('sample.sas7bdat', chunksize=10)
+for chunk in rdr:
+    print(chunk.shape)
+
+# Reading Stata file
+df = pd.read_stata('sample.dta')
+
+# Reading from Google BigQuery
+pd.read_gbq("SELECT urban_area_code, geo_code, name, area_type, area_land_meters FROM `bigquery-public-data.utility_us.us_cities_area` LIMIT 5", project_id, dialect  =  "standard")
+
+# Reading from clipboard
+pd.read_clipboard()
+
+### Managing sparse data
+# Creating sparse dataframe
+df = pd.DataFrame(np.random.randn(100, 3))
+df.iloc[:95] = np.nan
+# Checking memory taken by the dataframe with 95% NaNs
+df.memory_usage()
+# Converting to sparse format
+sparse_df = df.to_sparse()
+sparse_df.memory_usage()
+# Filling calues in sparse dataframe
+df.fillna(0).to_sparse(fill_value = 0)
+df.fillna(0).to_sparse(fill_value = 0).memory_usage()
+# Going from sparse form to dense form
+sparse_df.to_dense()
+
+# Writing CSV
+df.to_csv(“drive/folder/filepath.csv”)
+
+# Defining dataframe for JSON
+df = pd.DataFrame({"Col1": [1, 2, 3, 4, 5], "Col2": ["A", "B", "B", "A", "C"], "Col3": [True, False, False, True, True]})
+
+# Converting to JSON
+df.to_json()
+
+# Defining orientation of JSON
+df.to_json(orient="columns")
+df.to_json(orient="index")
+df.to_json(orient=“records”)
+df.to_json(orient=”values”)
+df.to_json(orient="split")
+df.to_json(orient="table")
+
+# Creating dataframe for serialization
+df = pd.DataFrame({"First_Name":["Mike","Val","George","Chris","Benjamin"],
+                  "Last_name":["K.","K.","C.","B.","A."],
+                  "Entry_date":pd.to_datetime(["June 23,1989","June 16,1995","June 20,1997","June 25,2005","March 25,2016"],format= "%B %d,%Y"),
+                  "Score":np.random.random(5)})
+
+# Writing to pickle
+df.to_pickle('pickle_filename.pkl')
+
+# Writing to pickle with compression
+df.to_pickle("pickle_filename.compress", compression="gzip")
+
+# Inferring compression format
+df.to_pickle("pickle_filename.gz")
+
+# Writing to Parquet file
+df.to_parquet(‘sample_pyarrow.parquet’, engine='pyarrow')
+df.to_parquet(‘sample_fastparquet.parquet’, engine='fastparquet')
+
+# Writing to HDF
+df.to_hdf('store.h5', append = True, format='table')
+
+# Writing to SQL database
+from sqlalchemy import create_engine
+	engine = create_engine('sqlite:///:memory:')
+df.to_sql('data_sql',engine)
+
+# Changing datatype when writing to SQL database
+from sqlalchemy.types import String
+	df.to_sql('data_dtype', engine, dtype={‘Score’: String})
+
+# Writing to feather format
+df.to_feather('sample.feather')
+
+# Writing to HTML
+df.to_html()
+
+# Writing to msgpack
+df.to_msgpack(“sample.msg”)
+
+# Writing msgpack with multiple objects
+arr = np.random.randint(1,10,7)
+lst = [10,20,40,60,60]
+strg = "Data"
+pd.to_msgpack("msg_all.msg",df,arr,lst,strg)
+
+# Writing to LaTex format
+df.to_latex()
+
+# Writing to Stata file
+df.to_stata('stata_df.dta')
+
+# Writing to clipboard
+df.to_clipboard()
+
+# Clipboard format for CSV
+df.to_clipboard(excel=True, sep=",")
+
+
+
+
+
+

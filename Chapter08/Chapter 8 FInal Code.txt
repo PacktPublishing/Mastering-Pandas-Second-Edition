@@ -1,0 +1,142 @@
+
+# coding: utf-8
+
+# In[23]:
+
+
+import pandas as pd
+import os
+get_ipython().run_line_magic('matplotlib', 'inline')
+
+
+# In[9]:
+
+
+ts1=pd.read_csv('datatraining.txt')
+ts2=pd.read_csv('datatest.txt')
+ts3=pd.read_csv('datatest2.txt')
+ts=pd.concat([ts1,ts2,ts3])
+#print(ts1.shape)
+#print(ts.shape)
+
+
+# In[12]:
+
+
+ts.index=ts['date']
+
+
+# In[17]:
+
+
+ts['datetime'] = pd.to_datetime(ts['date'])
+ts = ts.set_index('datetime')
+ts.drop(['date'], axis=1, inplace=True)
+
+
+# In[41]:
+
+
+#ts[ts.index.hour==4]
+#ts['2015-02-05']
+#ts['2015-02-05':'2015-02-06']
+
+
+# In[28]:
+
+
+#ts.plot(figsize=(15,1))
+ts.plot(y="Humidity",style='.',figsize=(15,1))
+ts.plot(y="CO2",style='.',figsize=(15,1))
+
+
+# In[32]:
+
+
+ts[["Humidity"]].resample("1d").median().plot(figsize=(15,1))
+
+
+# In[38]:
+
+
+ts[["Humidity"]].rolling(60*24).median().plot(figsize=(15,1))
+
+
+# In[49]:
+
+
+ts['Year']=ts.index.year
+ts['Month']=ts.index.month
+ts['Day']=ts.index.day
+ts['Hour']=ts.index.hour
+ts['Minute']=ts.index.minute
+ts['Second']=ts.index.second
+
+
+# In[50]:
+
+
+ts.head()
+
+# Sample time series data
+ts_df = pd.DataFrame({"ts_col": ["2013-01-01", "2015-02-10", "2016-10-24"], "value": [5, 6, 9]})
+ts_df
+
+ts_df.dtypes
+
+
+# Convert string to datetime
+ts_df["ts_col"] = pd.to_datetime(ts_df["ts_col"], format = "%Y-%m-%d")
+ts_df.dtypes
+
+import datetime as dt
+ts_df["ts_col"] = ts_df["ts_col"].apply(lambda x: 
+                                    dt.datetime.strptime(x,'%Y-%m-%d'))
+
+# Convert datetime to string
+ts_df["ts_col"] = ts_df["ts_col"].dt.strftime("%d/%m/%Y")
+ts_df.dtypes
+
+
+# Conversion with astype
+ts_df["ts_col"] = ts_df["ts_col"].astype("datetime64[ns]") 
+
+ts_df["ts_col"] = ts_df["ts_col"].astype("object")
+
+
+# Data transformation for time series data
+ts_complete_df = pd.read_csv("sensor_df.csv")
+
+ts_complete_df.groupby("ID").size().describe()
+
+truncate_df = pd.DataFrame()
+min_len = ts_complete_df.groupby("ID").size().min()
+for i in range(1,315):
+    df = ts_complete_df[ts_complete_df["ID"] == i].iloc[0:min_len, :]
+    truncate_df = truncate_df.append(df)
+truncate_df.groupby("ID").size().describe()
+
+
+# Feature extraction for time series data
+ts = pd.read_csv("D:/Occupancy/datatest.txt").iloc[:,0:2].set_index("date")
+ts
+
+feat_ext = pd.concat([ts.rolling(5).mean(), ts.rolling(5).std(), (ts - ts.shift(-5))/ts], axis=1).iloc[5:,:]
+feat_ext.columns = ['5_day_mean', '5_day_std', '5_day_gradient']
+feat_ext.head(5)
+
+
+# Plotting time series data
+plot_ts = pd.read_csv("D:/Occupancy/datatest.txt").set_index("date")
+
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
+axes = plot_ts.plot(figsize=(20,10), title='Timeseries Plot', subplots=True, layout=(plot_ts.shape[1],1), xticks = plot_ts.index)
+ax = plt.gca()
+ax.xaxis.set_major_locator(mdates.DayLocator(interval=1))   
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+plt.show()
+
+
+

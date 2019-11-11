@@ -1,0 +1,4 @@
+ID|level|category
+Patient1|123,000|x
+Patient2|23,000|y
+Patient3|1,234,018|z

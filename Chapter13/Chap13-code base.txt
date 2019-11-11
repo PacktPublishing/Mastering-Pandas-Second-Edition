@@ -1,0 +1,51 @@
+In [1]: import matplotlib.units as munits
+In [2]: munits.registry
+Out[2]: {}
+In [3]: import pandas
+In [4]: munits.registry
+Out[4]:
+{pandas.tslib.Timestamp: <pandas.tseries.converter.DatetimeConverter instance at 0x7fbbc4db17e8>,
+pandas.tseries.period.Period: <pandas.tseries.converter.PeriodConverter instance at 0x7fbbc4dc25f0>,
+datetime.date: <pandas.tseries.converter.DatetimeConverter instance at 0x7fbbc4dc2fc8>,
+datetime.datetime: <pandas.tseries.converter.DatetimeConverter instance at 0x7fbbc4dc2a70>,
+datetime.time: <pandas.tseries.converter.TimeConverter instance at 0x7fbbc4d61e18>}
+
+
+    In [3]: import pandas
+                    pandas.__file__
+    Out[3]: '/usr/lib/python2.7/site-packages/pandas/__init__.pyc'
+
+
+   In [4]: import math
+              math.__file__
+    Out[4]: '/usr/lib/python2.7/lib-dynload/math.so'
+
+
+
+    In [17]: def fibonacci(n):
+             a,b=1,1
+             for i in range(n):
+                 a,b=a+b,a
+             return a
+    In [18]: fibonacci(100)
+    Out[18]: 927372692193078999176L
+    In [19]: %timeit fibonacci(100)
+             100000 loops, best of 3: 18.2 µs per loop 
+
+
+    In [22]: %load_ext cythonmagic
+
+
+    In [24]: %%cython
+             def cfibonacci(int n):
+                 cdef int i, a,b
+                 for i in range(n):
+                     a,b=a+b,a
+                 return a 
+
+
+   In [25]: %timeit cfibonacci(100)
+             1000000 loops, best of 3: 321 ns per loop
+    
+    In [26]: 18.2/0.321
+    Out[26]: 56.69781931464174  

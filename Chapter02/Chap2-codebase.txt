@@ -1,0 +1,157 @@
+
+Linux
+
+
+
+which python
+
+python --version
+sudo apt-get install python2.7
+sudo apt-get install python2.7-devel
+
+       sudo yum install python
+       sudo yum install python-devel
+
+       sudo zypper install python
+       sudo zypper install python-devel
+
+#Install dependencies
+    sudo apt-get install build-essential
+    sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
+
+    #Download the tarball
+    mkdir /tmp/downloads
+    cd /tmp/downloads
+    wget http://python.org/ftp/python/2.7.5/Python-2.7.5.tgz
+    tar xvfz Python-2.7.5.tgz
+    cd Python-2.7.5
+
+    # Configure, build and install
+    ./configure --prefix=/opt/python2.7 --enable-shared
+    make
+    make test
+    sudo make install
+    echo "/opt/python2.7/lib" >> /etc/ld.so.conf.d/opt-python2.7.conf
+    ldconfig
+    cd ..
+    rm -rf /tmp/downloads
+
+
+
+macOS/X
+
+
+
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+
+brew install python
+
+
+ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+
+brew install python
+
+
+
+bash ~/Downloads/Anaconda3-5.3.0-Linux-x86_64.sh
+
+
+bash ~/Downloads/Anaconda2-5.3.0-Linux-x86_64.sh
+
+
+
+
+Jupyter Notebook
+
+
+
+pip install jupyter
+
+jupyter notebook
+
+
+
+Pandas with R
+
+
+
+library(reticulate)
+
+# Installing a python package from R
+py_install("pandas")
+
+# Importing pandas
+pd &lt;- import("pandas", convert = FALSE)
+
+# Some basic pandas operations in R
+pd_df &lt;- pd$read_csv("train.csv")
+pd_head &lt;- pd_df$head()
+pd_dtypes &lt;- pd_df$dtypes
+
+numpy &lt;- import("numpy")
+
+y &lt;- array(1:4, c(2, 2))
+x &lt;- numpy$array(y)
+
+import pandas
+def get_data_head(file):
+    data = pandas.read_csv(file)
+    data_head = data.head()
+    return(data_head)
+
+source_python("titanic.py")
+titanic_in_r &lt;- get_data_head("titanic.csv")
+
+library(reticulate)
+repl_python()
+import pandas as pd
+[i*i for i in range(10)]
+
+
+summary(py$df)
+
+Pkg.add("Pandas")
+using Pandas
+# Creating a dataframe object
+df = DataFrame(Dict(:score=>[67, 89, 32], :name=>["A", "B", "C"]))
+
+# Any Pandas function or method could be applied on the created dataframe.
+head(df)
+describe(df)
+
+# Get the first 10 rows
+$ head myData.csv
+
+# Get the first 5 rows
+$ head -n 5 myData.csv
+
+# Get 100 bytes of data
+$ head -c 100 myData.csv
+
+$ cat upper.txt | tr "[:upper:]" "[:lower:]" >lower.txt
+
+$ split -l 100 huge_file.csv small_filename_
+
+
+# Sort the 5th column alphabetically
+     $ sort -t, -k5 orderfile.csv
+
+# Sort the 3rd column in reverse numerical order
+      $ sort -t,  -k3nr orederfile.csv
+
+
+pd.get_option("display.max_rows")
+Output: 60
+
+pd.set_option("display.max_rows", 120)
+pd.get_option("display.max_rows")
+Output: 120
+
+pd.reset_option("display.max_rows")
+pd.get_option("display.max_rows")
+Output: 60
+
+
+
+
+

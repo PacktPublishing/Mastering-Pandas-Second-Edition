@@ -1,0 +1,469 @@
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib import colors
+import matplotlib.pyplot as plt
+import matplotlib
+%matplotlib inline
+
+
+from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
+X=range(0,11)
+Y=[1/6.0 if x in range(1,7) else 0.0 for x in X]
+plt.plot(X,Y,'go-', linewidth=0, drawstyle='steps-pre', 
+    label="p(x)=1/6")
+plt.legend(loc="upper left")
+plt.vlines(range(1,7),0,max(Y), linestyle='-')
+plt.xlabel('x')
+plt.ylabel('p(x)')
+plt.ylim(0,0.5)
+plt.xlim(0,10)
+plt.title('Discrete uniform probability distribution with 
+          p=1/6')
+plt.show()
+
+
+
+import matplotlib
+        from scipy.stats import bernoulli
+        a = np.arange(2)
+    
+        colors = matplotlib.rcParams['axes.color_cycle']
+        plt.figure(figsize=(12,8))
+        for i, p in enumerate([0.0, 0.2, 0.5, 0.75, 1.0]):
+             ax = plt.subplot(1, 5, i+1)
+             plt.bar(a, bernoulli.pmf(a, p), label=p, color=colors[i], alpha=0.5)
+             ax.xaxis.set_ticks(a)
+    
+            plt.legend(loc=0)
+                if i == 0:
+                     plt.ylabel("PDF at $k$")
+    
+    
+            plt.suptitle("Bernoulli probability for various values of $p$")
+
+
+
+     from scipy.stats import binom
+       clrs = ['blue','green','red','cyan','magenta']     plt.figure(figsize=(12,6))
+      k = np.arange(0, 22)
+      for p, color in zip([0.001, 0.1, 0.3, 0.6, 0.999], clrs):
+           rv = binom(20, p)
+           plt.plot(k, rv.pmf(k), lw=2, color=color, label="$p$=" + str(round(p,1)))
+    
+            plt.legend()
+      plt.title("Binomial distribution PMF")
+      plt.tight_layout()
+      plt.ylabel("PDF at $k$")
+      plt.xlabel("$k$")
+  
+
+
+
+
+ %matplotlib inline
+       import numpy as np
+       import matplotlib
+       import matplotlib.pyplot as plt
+       from scipy.stats import poisson
+       colors = matplotlib.rcParams['axes.color_cycle']
+       k=np.arange(15)
+       plt.figure(figsize=(12,8))
+       for i, lambda_ in enumerate([1,2,4,6]):
+            plt.plot(k, poisson.pmf(k, lambda_), '-o',  
+            label="$\lambda$=" + str(lambda_), color=colors[i])
+            plt.legend()
+       plt.title("Possion distribution PMF for various $\lambda$")
+       plt.ylabel("PMF at $k$")
+       plt.xlabel("$k$")
+       plt.show()
+  
+
+
+
+ from scipy.stats import geom
+          p_vals=[0.01,0.2,0.5,0.8,0.9]
+       x = np.arange(geom.ppf(0.01,p),geom.ppf(0.99,p))
+            colors = matplotlib.rcParams['axes.color_cycle']
+            for p,color in zip(p_vals,colors):
+              x = np.arange(geom.ppf(0.01,p),geom.ppf(0.99,p))
+                 plt.plot(x,geom.pmf(x,p),'-o',ms=8,label='$p$=' + str(p))
+              plt.legend(loc='best')
+            plt.ylim(-0.5,1.5)
+            plt.xlim(0,7.5)
+            plt.ylabel("Pmf at $k$")
+            plt.xlabel("$k$")
+            plt.title("Geometric distribution PMF")
+
+
+ from scipy.stats import nbinom
+           from matplotlib import colors
+        clrs = matplotlib.rcParams['axes.color_cycle']
+        x = np.arange(0,11)
+        n_vals = [0.1,1,3,6]
+        p=0.5
+              for n, clr in zip(n_vals, clrs):
+                  rv = nbinom(n,p)
+                  plt.plot(x,rv.pmf(x), label="$n$=" + str(n), color=clr)
+                  plt.legend()
+              plt.title("Negative Binomial Distribution PMF")
+              plt.ylabel("PMF at $x$")
+              plt.xlabel("$x$")
+
+
+
+np.random.seed(100)  # seed the random number generator
+                                  # so plots are reproducible
+             subplots = [111,211,311]
+             ctr = 0 
+             fig, ax = plt.subplots(len(subplots), figsize=(10,12))
+             nsteps=10
+             for i in range(0,3):
+               cud = np.random.uniform(0,1,nsteps) # generate distrib
+               count, bins, ignored = ax[ctr].hist(cud,15,normed=True)
+               ax[ctr].plot(bins,np.ones_like(bins),linewidth=2, color='r')
+               ax[ctr].set_title('sample size=%s' % nsteps)
+               ctr += 1
+               nsteps *= 100
+             fig.subplots_adjust(hspace=0.4)
+             plt.suptitle("Continuous Uniform probability distributions for various sample sizes" , fontsize=14)
+  
+
+
+import scipy.stats
+             clrs = colors.cnames
+               x = np.linspace(0,4, 100)
+            expo = scipy.stats.expon
+            lambda_ = [0.5, 1, 2, 5]
+           plt.figure(figsize=(12,4))
+           for l,c in zip(lambda_,clrs):
+               plt.plot(x, expo.pdf(x, scale=1./l), lw=2,
+                          color=c, label = "$\lambda = %.1f$"%l)
+                 plt.legend()
+                 plt.ylabel("PDF at $x$")
+          plt.xlabel("$x$")
+          plt.title("Pdf of an Exponential random variable for various $\lambda$");
+  
+
+
+import matplotlib
+        from scipy.stats import norm
+          X = 2.5
+       dx = 0.1
+       R = np.arange(-X,X+dx,dx)
+    
+       L = list()
+       sdL = (0.5,1,2,3)
+       for sd in sdL:
+            f = norm.pdf
+            L.append([f(x,loc=0,scale=sd) for x in R])
+    
+       colors = matplotlib.rcParams['axes.color_cycle']
+       for sd,c,P in zip(sdL,colors,L):
+            plt.plot(R,P,zorder=1,lw=1.5,color=c,
+                    label="$\sigma$=" + str(sd))
+            plt.legend()
+    
+       ax = plt.axes()
+       ax.set_xlim(-2.1,2.1)
+       ax.set_ylim(0,1.0)
+       plt.title("Normal distribution Pdf")
+       plt.ylabel("PDF at $\mu$=0, $\sigma$")
+  
+
+
+from scipy.stats import binom
+         from matplotlib import colors
+      cols = colors.cnames
+      n_values = [1, 5,10, 30, 100]
+    
+      subplots = [111+100*x for x in range(0,len(n_values))]
+      ctr = 0 
+      fig, ax = plt.subplots(len(subplots), figsize=(6,12))
+      k = np.arange(0, 200)
+      p=0.5
+    
+      for n, color in zip(n_values, cols):
+              k=np.arange(0,n+1)
+              rv = binom(n, p)
+              ax[ctr].plot(k, rv.pmf(k), lw=2, color=color)
+              ax[ctr].set_title("$n$=" + str(n))
+              ctr += 1
+    
+      fig.subplots_adjust(hspace=0.5)
+      plt.suptitle("Binomial distribution PMF (p=0.5) for various values of n", fontsize=14)
+  
+
+
+    head -2 ../fb_post_dates.txt 
+    Tuesday, September 30, 2014 | 2:43am EDT
+    Tuesday, September 30, 2014 | 2:22am EDT
+
+
+ 
+filePath="./data/fb_post_dates.txt"
+             fbdata_df=pd.read_csv(filePath,  sep='|', parse_dates=[0], header=None,names=['Date','Time'])
+
+ fbdata_df.head()  #inspect the data
+
+
+  Date       Time
+    0  2014-09-30   2:43am EDT
+    1  2014-09-30   2:22am EDT
+    2  2014-09-30   2:06am EDT
+    3  2014-09-30   1:07am EDT
+    4  2014-09-28   9:16pm EDT
+  
+
+ fbdata_df_ind=fbdata_df.set_index('Date')
+              fbdata_df_ind.head(5)
+                      
+             Date        Time
+             2014-09-30  2:43am EDT
+             2014-09-30  2:22am EDT
+             2014-09-30  2:06am EDT
+             2014-09-30  1:07am EDT
+             2014-09-28  9:16pm EDT  
+
+
+ fbdata_df_ind.index
+
+ <class 'pandas.tseries.index.DatetimeIndex'>
+              [2014-09-30, ..., 2007-04-16]
+              Length: 7713, Freq: None, Timezone: None 
+
+
+fb_mth_count_=fbdata_df_ind.resample('M', how='count')
+             fb_mth_count_.rename(columns={'Time':'Count'},
+                                  inplace=True)   # Rename 
+             fb_mth_count_.head()
+
+
+            Count
+            Date
+            2007-04-30  1
+            2007-05-31  0
+            2007-06-30  5
+            2007-07-31  50
+            2007-08-31  24   
+
+
+
+ %matplotlib inline
+              import datetime as dt
+    #Obtain the count data from the DataFrame as a dictionary
+              year_month_count=fb_bymth_count.to_dict()['Count'] 
+              size=len(year_month_count.keys())
+    #get dates as list of strings
+              xdates=[dt.datetime.strptime(str(yyyymm),'%Y%m') 
+                      for yyyymm in year_month_count.keys()] 
+              counts=year_month_count.values()
+              plt.scatter(xdates,counts,s=counts)
+             plt.xlabel('Year')
+              plt.ylabel('Number of Facebook posts')
+              plt.show() 
+  
+
+
+ fb_activity_data = [year_month_count[k] for k in 
+                                 sorted(year_month_count.keys())]
+            fb_activity_data[:5]
+
+[1, 0, 5, 50, 24]
+ fb_post_count=len(fb_activity_data)
+
+
+from IPython.core.pylabtools import figsize
+             import matplotlib.pyplot as plt
+               figsize(8, 5)
+            plt.bar(np.arange(fb_post_count),
+             fb_activity_data, color="#49a178")
+            plt.xlabel("Time (months)")
+            plt.ylabel("Number of FB posts")
+            plt.title("Monthly Facebook posts over time")
+            plt.xlim(0,fb_post_count);  
+
+
+
+
+# Define data and stochastics
+            import pymc as pm
+            switchpoint = pm.DiscreteUniform('switchpoint',
+                                              lower=0,
+                                        upper=len(fb_activity_data)-1,
+                                           doc='Switchpoint[month]')
+            avg = np.mean(fb_activity_data)
+            early_mean = pm.Exponential('early_mean', beta=1./avg)
+            late_mean = pm.Exponential('late_mean', beta=1./avg)
+            late_mean
+<pymc.distributions.Exponential 'late_mean' at 0x10ee56d50>  
+
+
+
+@pm.deterministic(plot=False)
+             def rate(s=switchpoint, e=early_mean, l=late_mean):
+                 ''' Concatenate Poisson means '''
+                 out = np.zeros(len(fb_activity_data))
+                 out[:s] = e
+                 out[s:] = l
+             return out
+    
+             fb_activity = pm.Poisson('fb_activity', mu=rate,   
+                           value=fb_activity_data, observed=True)
+             fb_activity
+
+
+ <pymc.distributions.Poisson 'fb_activity' at 0x10ed1ee50> 
+
+ 
+fb_activity_model=pm.Model([fb_activity,early_mean,
+                                         late_mean,rate])
+from pymc import MCMC
+               fbM=MCMC(fb_activity_model)
+fbM.sample(iter=40000,burn=1000, thin=20)
+               [-----------------100%-----------------] 40000 of 40000 
+              complete in 11.0 sec
+
+
+  
+from pylab import hist,show
+               %matplotlib inline
+            hist(fbM.trace('late_mean')[:])
+(array([  15.,   61.,  214.,  421.,  517.,  426.,  202.,
+                       70.,   21.,    3.]),
+              array([ 102.29451192,  103.25158404,  104.20865616,
+                      105.16572829,  106.12280041,  107.07987253,
+                      108.03694465,  108.99401677,  109.95108889,
+                      110.90816101,  111.86523313]),
+               <a list of 10 Patch objects>)
+
+
+
+plt.hist(fbM.trace('early_mean')[:])
+(array([  20.,  105.,  330.,  489.,  470.,  314.,  147.,
+                       60.,    3.,   12.]),
+              array([ 49.19781192,  50.07760882,  50.95740571,
+                      51.83720261,  52.71699951,  53.59679641,
+                      54.47659331,  55.35639021,  56.2361871 ,
+                      57.115984  ,  57.9957809 ]),
+            <a list of 10 Patch objects>)
+  
+
+
+fbM.trace('switchpoint')[:]
+array([38, 38, 38, ..., 35, 35, 35])
+plt.hist(fbM.trace('switchpoint')[:])
+(array([ 1899.,     0.,     0.,     0.,     0.,     0.,
+                       0., 0., 0.,    51.]),
+               array([ 35. ,  35.3,  35.6,  35.9,  36.2,  36.5,  36.8,
+                       37.1,  37.4, 37.7,  38. ]),
+               <a list of 10 Patch objects>)
+
+
+
+early_mean_samples=fbM.trace('early_mean')[:]
+              late_mean_samples=fbM.trace('late_mean')[:]
+              switchpoint_samples=fbM.trace('switchpoint')[:]
+ from IPython.core.pylabtools import figsize
+           figsize(12.5, 10)
+        # histogram of the samples:
+        fig = plt.figure()
+        fig.subplots_adjust(bottom=-0.05)
+    
+        n_mths=len(fb_activity_data)
+        ax = plt.subplot(311)
+        ax.set_autoscaley_on(False)
+    
+         plt.hist(early_mean_samples, histtype='stepfilled',
+                  bins=30, alpha=0.85, label="posterior of $e$",
+                  color="turquoise", normed=True)
+        plt.legend(loc="upper left")
+        plt.title(r"""Posterior distributions of the variables
+                   $e, l, s$""",fontsize=16)
+        plt.xlim([40, 120])
+         plt.ylim([0, 0.6])
+        plt.xlabel("$e$ value",fontsize=14)
+    
+         ax = plt.subplot(312)
+        ax.set_autoscaley_on(False)
+        plt.hist(late_mean_samples, histtype='stepfilled',
+                  bins=30, alpha=0.85, label="posterior of $l$",
+                  color="purple", normed=True)
+        plt.legend(loc="upper left")
+        plt.xlim([40, 120])
+         plt.ylim([0, 0.6])
+        plt.xlabel("$l$ value",fontsize=14)
+        plt.subplot(313)
+        w = 1.0 / switchpoint_samples.shape[0] *
+             np.ones_like(switchpoint_samples)
+        plt.hist(switchpoint_samples, bins=range(0,n_mths), alpha=1,
+                  label=r"posterior of $s$", color="green",
+                  weights=w, rwidth=2.)
+        plt.xlim([20, n_mths - 20])
+        plt.xlabel(r"$s$ (in days)",fontsize=14)
+        plt.ylabel("probability")
+        plt.legend(loc="upper left")
+    
+         plt.show()
+  
+
+
+
+from pymc.Matplot import plot
+           plot(fbM)
+        Plotting late_mean
+        Plotting switchpoint
+        Plotting early_mean
+ 
+
+
+import numpy as np
+import math as mh
+np.seterr(divide='ignore', invalid='ignore') #ignore division by zero and invalid numbers
+def poissonpdf(x,lbd):
+    val = (np.power(lbd,x)*np.exp(-lbd))/(mh.factorial(x))
+    return val
+Write a function to calculate the log-likelihood over the data given a value for the arrival rate:
+def loglikelihood(data,lbd):
+    lkhd=1
+    for i in range(len(data)):
+        lkhd=lkhd*poissonpdf(data[i],lbd)
+    if lkhd!=0:
+        val=np.log(lkhd)
+    else:
+        val=0
+    return val
+Write a function to calculate the derivative of the log-likelihood for the arrival rate ?:
+def diffllhd(data,lbd):
+    diff = -len(data) + sum(data)/lbd
+    return diff
+Generate test data with 100 data points—a random number of arrivals/unit time between 3 and 12:
+data=[randint(3, 12) for p in range(100)]
+Calculate the log-likelihood for different values of arrival rates (1 to 9) and plot them to find the arrival rate that maximizes:
+y=[loglikelihood(data,i) for i in range(1,10)]
+y=[num for num in y if num ]
+x=[i for i in range(1,10) if loglikelihood(data,i)]
+plt.plot(x,y)
+plt.axvline(x=6,color='k')
+plt.title('Log-Likelihoods for different lambdas')
+plt.xlabel('Log Likelihood')
+plt.ylabel('Lambda')
+From this, we get the following plot, which shows that the maximum value of the log-likelihood on the test data is obtained when the arrival rate is 6/unit time:
+
+
+
+Log-likelihood values at different values of lambda (that is, arrival rate)
+Use the Newton–Raphson method to find the global maximum of the log-likelihood:
+def newtonRaphson(data,lbd):
+    h = loglikelihood(data,lbd) / diffllhd(data,lbd)
+    while abs(h) >= 0.0001:
+        if diffllhd!=0:
+            h = loglikelihood(data,lbd) / diffllhd(data,lbd)
+
+        # x(i+1) = x(i) - f(x) / f'(x)
+            lbd = lbd - h
+        else:
+            lbd=lbd
+    return lbd
+

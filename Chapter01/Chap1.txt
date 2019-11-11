@@ -1,0 +1,40 @@
+public class CSVReader { 
+public static void main(String[] args) { 
+        String[] csvFile=args[1];
+        CSVReader csvReader = new csvReader();
+        List&lt;Map&gt;dataTable=csvReader.readCSV(csvFile);
+   }
+ public void readCSV(String[] csvFile)
+ {
+   BufferedReader bReader=null;
+   String line="";
+   String delim=","; 
+  //Initialize List of maps, each representing a line of the csv file
+   List&lt;Map&gt; data=new ArrayList&lt;Map&gt;(); 
+  try {
+         bufferedReader = new BufferedReader(new   FileReader(csvFile));
+        // Read the csv file, line by line
+           while ((line = br.readLine()) != null){
+            String[] row = line.split(delim);
+            Map&lt;String,String&gt; csvRow=new HashMap&lt;String,String&gt;(); 
+           csvRow.put('Country')=row[0]; 
+            csvRow.put('Year')=row[1];
+        csvRow.put('CO2Emissions')=row[2]; csvRow.put('PowerConsumption')=row[3];
+                csvRow.put('FertilityRate')=row[4];
+                csvRow.put('InternetUsage')=row[1];
+                csvRow.put('LifeExpectancy')=row[6];
+                csvRow.put('Population')=row[7];
+                data.add(csvRow); 
+        } 
+     } catch (FileNotFoundException e) {
+   e.printStackTrace(); 
+     } catch (IOException e) {
+     e.printStackTrace(); 
+    }  
+ return data;
+ } 
+
+
+
+import pandas as pd
+ worldBankDF=pd.read_csv('worldbank.csv') 
