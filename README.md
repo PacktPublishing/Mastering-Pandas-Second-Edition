@@ -1,5 +1,4 @@
 # Mastering-Pandas-Second-Edition
-# Mastering Pandas Second Edition, published by Packt 
 
 <a href="https://www.packtpub.com/in/data/mastering-pandas-second-edition?utm_source=github&utm_medium=repository&utm_campaign=9781789343236"><img src="https://www.packtpub.com/media/catalog/product/cache/e4d64343b1bc593f1c5348fe05efa4a6/9/7/9781789343236-original.jpeg" alt="Mastering Pandas Second Edition" height="256px" align="right"></a>
 
