@@ -25,7 +25,7 @@ If you feel this book is for you, get your [copy](https://www.amazon.com/Masteri
 alt="https://www.packtpub.com/" border="5" /></a>
 
 ## Instructions and Navigations
-All of the code is organized into folders. For example, Chapter02.
+All of the code is organized into folders. For example, 
 
 The code will look like the following:
 ```
@@ -52,7 +52,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 * Hands-On Data Analysis with Pandas [[Packt]](https://www.packtpub.com/in/big-data-and-business-intelligence/hands-data-analysis-numpy-and-pandas) [[Amazon]](https://www.amazon.in/Hands-Data-Analysis-NumPy-pandas/dp/1789530792)
 
 ## Get to Know the Author
-**Ashish Kumar is a seasoned data science professional, a publisher author and a thought leader in the field of data science and machine learning. An IIT Madras graduate and a Young India Fellow, he has around 7 years of experience in implementing and deploying data science and machine learning solutions for challenging industry problems in both hands-on and leadership roles. Natural Language Procession, IoT Analytics, R Shiny product development, Ensemble ML methods etc. are his core areas of expertise. He is fluent in Python and R and teaches a popular ML course at Simplilearn. When not crunching data, Ashish sneaks off to the next hip beach around and enjoys the company of his Kindle. He also trains and mentors data science aspirants and fledgling start-ups.
+Ashish Kumar is a seasoned data science professional, a publisher author and a thought leader in the field of data science and machine learning. An IIT Madras graduate and a Young India Fellow, he has around 7 years of experience in implementing and deploying data science and machine learning solutions for challenging industry problems in both hands-on and leadership roles. Natural Language Procession, IoT Analytics, R Shiny product development, Ensemble ML methods etc. are his core areas of expertise. He is fluent in Python and R and teaches a popular ML course at Simplilearn. When not crunching data, Ashish sneaks off to the next hip beach around and enjoys the company of his Kindle. He also trains and mentors data science aspirants and fledgling start-ups.
 
 
 ### Suggestions and Feedback
