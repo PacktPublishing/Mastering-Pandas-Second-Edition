@@ -8,7 +8,7 @@ This is the code repository for [Mastering Pandas Second Edition](https://www.pa
 
 ## What is this book about?
 	
-pandas is a popular Python library used by data scientists and analysts worldwide to manipulate and analyze their data. This book presents useful data manipulation techniques in pandas to perform complex data analysis in various domains.
+pandas is a popular Python library used by data scientists and analysts worldwide to manipulate and analyze their data. This book presents useful techniques and real-world examples on getting the most out of pandas for expert-level data manipulation, analysis and visualization.
 
 
 This book covers the following exciting features:
