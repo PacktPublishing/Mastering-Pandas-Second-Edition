@@ -55,7 +55,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 **Ashish Kumar** is a seasoned data science professional, a publisher author and a thought leader in the field of data science and machine learning. An IIT Madras graduate and a Young India Fellow, he has around 7 years of experience in implementing and deploying data science and machine learning solutions for challenging industry problems in both hands-on and leadership roles. Natural Language Procession, IoT Analytics, R Shiny product development, Ensemble ML methods etc. are his core areas of expertise. He is fluent in Python and R and teaches a popular ML course at Simplilearn. When not crunching data, Ashish sneaks off to the next hip beach around and enjoys the company of his Kindle. He also trains and mentors data science aspirants and fledgling start-ups.
 
 
-### Suggestions and Feedback
+## Suggestions and Feedback
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
 
 
