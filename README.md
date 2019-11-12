@@ -46,7 +46,7 @@ With the following software and hardware list you can run all code files present
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781789343236_ColorImages.pdf).
 
-### Related products
+## Related products
 * Pandas Cookbook [[Packt]](https://www.packtpub.com/in/big-data-and-business-intelligence/pandas-cookbook) [[Amazon]](https://www.amazon.com/Pandas-Cookbook-Scientific-Computing-Visualization/dp/1784393878)
 
 * Hands-On Data Analysis with Pandas [[Packt]](https://www.packtpub.com/in/big-data-and-business-intelligence/hands-data-analysis-numpy-and-pandas) [[Amazon]](https://www.amazon.in/Hands-Data-Analysis-NumPy-pandas/dp/1789530792)
